@@ -3,12 +3,10 @@ import { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addUSer } from "../utils/userSlice";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
-  const navigate = useNavigate();
   const dispatch  = useDispatch();
   const [isSignInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -39,8 +37,7 @@ const Login = () => {
           })
             .then(() => {
               const {uid, email, displayName, photoURL} = auth.currentUser;
-              dispatch(addUSer({uid:uid, email:email, displayName:displayName, photoURL:photoURL}));
-              navigate("/browse");
+              dispatch(addUser({uid:uid, email:email, displayName:displayName, photoURL:photoURL}));
             })
             .catch((error) => {
               setErrorMessage("Something went wrong!!"+ error.message);
@@ -53,14 +50,10 @@ const Login = () => {
           // ..
         });
     } else {
-      //signIn
       signInWithEmailAndPassword(auth, email.current.value, password.current.value)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
-          // ...
         })
         .catch((error) => {
           const errorCode = error.code;
