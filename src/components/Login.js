@@ -5,6 +5,7 @@ import { checkValidData } from "../utils/validate";
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { NETFLIX_BG, PHOTO_URL } from "../utils/constants";
 
 const Login = () => {
   const dispatch  = useDispatch();
@@ -33,7 +34,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://media.istockphoto.com/id/2148975617/photo/woman-jumping-high-after-successful-job-interview.jpg?s=612x612&w=0&k=20&c=puWecKm9APpx7QYJmjHEySQVZM38wRDEQQvSZaCeL30=",
+            photoURL:{PHOTO_URL}
           })
             .then(() => {
               const {uid, email, displayName, photoURL} = auth.currentUser;
@@ -72,7 +73,7 @@ const Login = () => {
       <Header />
       <div className="absolute">
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/9ba9f0e2-b246-47f4-bd1f-3e84c23a5db8/web/IN-en-20251020-TRIFECTA-perspective_d6da84e9-6145-4b1e-bb51-e402c966a045_large.jpg"
+          src = { NETFLIX_BG }
           alt="logo"
         />
       </div>
