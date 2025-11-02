@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useEffect, useState } from "react";
 import { LOGO, PHOTO_URL } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const handleSignOut = () => {
@@ -48,6 +50,10 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleGptSearchClick = ()=>{
+    dispatch(toggleGptSearchView());   
+  }
+
   return (
     <header
       className={`fixed top-0 left-0 w-full flex justify-between items-center px-8 py-3 z-50 transition-all duration-500 ${
@@ -66,6 +72,7 @@ const Header = () => {
 
       {user && (
         <div className="flex items-center space-x-3">
+          <button className="px-4 py-2 m-2 bg-purple-800 text-white font-bold rounded-lg" onClick={handleGptSearchClick}>Gpt-Search</button>
           <img
             className="w-10 h-10 rounded-md object-cover"
             src={PHOTO_URL}
